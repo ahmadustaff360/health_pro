@@ -1,0 +1,64 @@
+{
+ "actions": [],
+ "allow_guest_to_view": 1,
+ "allow_rename": 1,
+ "autoname": "HC-.#####",
+ "creation": "2025-02-09 22:46:27.738906",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "county_name",
+  "county_description"
+ ],
+ "fields": [
+  {
+   "fieldname": "county_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "County Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "county_description",
+   "fieldtype": "Long Text",
+   "label": "County description"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-02-10 01:03:31.196704",
+ "modified_by": "Administrator",
+ "module": "Health Pro",
+ "name": "Health County",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Administrator",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

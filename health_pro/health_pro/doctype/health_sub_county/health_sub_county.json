@@ -1,0 +1,60 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "HSC-.#####",
+ "creation": "2025-02-09 22:51:09.306795",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "sub_county_name",
+  "sub_county_description",
+  "health_county"
+ ],
+ "fields": [
+  {
+   "fieldname": "sub_county_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Sub County Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sub_county_description",
+   "fieldtype": "Long Text",
+   "label": "Sub County Description"
+  },
+  {
+   "fieldname": "health_county",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Health County",
+   "options": "Health County",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-02-09 22:57:49.791276",
+ "modified_by": "Administrator",
+ "module": "Health Pro",
+ "name": "Health Sub County",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
