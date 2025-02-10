@@ -25,8 +25,9 @@ def create_health_county():
         if not data.get("county_name"):
             frappe.throw(_("County name is required"))
         
-        county.county_name = data.get("county_name")
-        county.county_description = data.get("county_description")
+        for field, value in data.items():
+            if hasattr(county, field):
+                setattr(county, field, value)
         county.insert()
         return county.as_dict()
     except Exception as e:
@@ -40,14 +41,10 @@ def update_health_county(id):
     try:
         county = frappe.get_doc("Health County", id)
         data = json.loads(frappe.request.data)
-        county_name = data.get("county_name")
-        county_description = data.get("county_description")
         
-        if county_name:
-            county.county_name = county_name
-            
-        if county_description:
-            county.county_description = county_description
+        for field, value in data.items():
+            if hasattr(county, field):
+                setattr(county, field, value)
             
         county.save()
         frappe.db.commit()
