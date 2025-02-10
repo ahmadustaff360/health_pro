@@ -17,19 +17,19 @@ Response:
     "status_code": 200,
     "data": [
         {
-            "name": "HC-00005",
             "county_name": "Example County",
-            "county_description": "This is an example description."
+            "county_description": "This is an example description.",
+            "name": "HC-00005"
         },
         {
-            "name": "HC-00002",
             "county_name": "Updated County",
-            "county_description": "Second Description"
+            "county_description": "Second Description",
+            "name": "HC-00002"
         },
         {
-            "name": "HC-00001",
             "county_name": "First County",
-            "county_description": "First Description"
+            "county_description": "First Description",
+            "name": "HC-00001"
         }
     ]
 }
@@ -51,9 +51,9 @@ Response:
 {
     "status_code": 201,
     "data": {
-        "name": "HC-00014",
         "county_name": "Example County",
-        "county_description": "This is an example description."
+        "county_description": "This is an example description.",
+        "name": "HC-00014",
     }
 }
 
@@ -77,9 +77,9 @@ Response:
 {
     "status_code": 200,
     "data": {
-        "name": "HC-00012",
         "county_name": "Updated County",
-        "county_description": "This is an example description."
+        "county_description": "This is an example description.",
+        "name": "HC-00012",
     }
 }
 

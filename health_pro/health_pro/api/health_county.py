@@ -1,4 +1,3 @@
-
 import json
 import frappe
 from frappe import _
@@ -15,13 +14,19 @@ from .response_utils import (
 
 class HealthCountyAPI:
     """API for Health County CRUD operations with minimal response data."""
-
+    
     def get(self):
         """Retrieve all health counties with selected fields only."""
         try:
+            fields = frappe.get_meta("Health County").fields
+            field_names = [field.fieldname for field in fields if field.fieldtype != "Table"]
+            
+            if 'name' not in field_names:
+                field_names.append('name')
+
             counties = frappe.get_all(
                 "Health County",
-                fields=["name", "county_name", "county_description"]
+                fields=field_names
             )
             return success_response(counties)
         except Exception as e:
@@ -32,22 +37,35 @@ class HealthCountyAPI:
         """Create a new health county and return minimal data."""
         try:
             data = json.loads(frappe.request.data)
-            if not data.get("county_name"):
-                return missing_field_response("county_name")
+            
+            fields = [
+                field.fieldname 
+                for field in frappe.get_meta("Health County").fields 
+                if field.fieldtype != "Table"
+            ]
+            
+            mandatory_fields = [
+                field.fieldname 
+                for field in frappe.get_meta("Health County").fields 
+                if field.reqd
+            ]
+            
+            for field in mandatory_fields:
+                if field not in data:
+                    return missing_field_response(field)
             
             county = frappe.new_doc("Health County")
-            county.update({
-                "county_name": data.get("county_name"),
-                "county_description": data.get("county_description")
-            })
+            for field, value in data.items():
+                if field in fields:
+                    county.set(field, value)
+            
             county.insert()
             frappe.db.commit()
 
-            return created_successfully_response({
-                "name": county.name,
-                "county_name": county.county_name,
-                "county_description": county.county_description
-            })
+            county_data = {field: getattr(county, field) for field in fields}
+            county_data['name'] = county.name
+
+            return created_successfully_response(county_data)
         except Exception as e:
             frappe.log_error(message=str(e), title="Health County Create Error")
             return creation_failed_response()
@@ -57,20 +75,19 @@ class HealthCountyAPI:
         try:
             county = frappe.get_doc("Health County", id)
             data = json.loads(frappe.request.data)
-            
-            if "county_name" in data:
-                county.county_name = data["county_name"]
-            if "county_description" in data:
-                county.county_description = data["county_description"]
+            fields = [field.fieldname for field in frappe.get_meta("Health County").fields if field.fieldtype != "Table"]
+
+            for field, value in data.items():
+                if field in fields:
+                    county.set(field, value)
 
             county.save()
             frappe.db.commit()
+            updated_data = {field: getattr(county, field) for field in fields}
+            updated_data['name'] = county.name
 
-            return success_response({
-                "name": county.name,
-                "county_name": county.county_name,
-                "county_description": county.county_description
-            })
+            return success_response(updated_data)
+
         except frappe.DoesNotExistError:
             return not_found_response("Health County", id)
         except Exception as e:
