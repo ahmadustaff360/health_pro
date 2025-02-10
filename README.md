@@ -6,7 +6,7 @@ This API provides CRUD operations for managing Health County records in a Frappe
 
 Endpoints
 1. Retrieve All Health Counties
-GET http://website-name:8000/api/method/health_pro.health_pro.api.health_county.get_health_county
+GET http://website-name:8000/api/method/health_pro.health_pro.api.health_county_api.get_health_county
 
 Description:
 Returns a list of all health counties.
@@ -36,7 +36,7 @@ Response:
 
 2. Create a New Health County
 
-POST http://website-name:8000/api/method/health_pro.health_pro.api.health_county.create_health_county
+POST http://website-name:8000/api/method/health_pro.health_pro.api.health_county_api.create_health_county
 
 Description:
 Creates a new health county with the provided data.
@@ -65,7 +65,7 @@ Response:
 
 3. Update an Existing Health County
 
-PUT http://website-name:8000/api/method/health_pro.health_pro.api.health_county.update_health_county?id=HC-00006
+PUT http://website-name:8000/api/method/health_pro.health_pro.api.health_county_api.update_health_county?id=HC-00006
 
 Description:
 Updates the specified health county with the provided data.
@@ -96,7 +96,7 @@ Response:
 }
 
 4. Delete a Health County
-DELETE http://website-name:8000/api/method/health_pro.health_pro.api.health_county.delete_health_county?id=HC-00006
+DELETE http://website-name:8000/api/method/health_pro.health_pro.api.health_county_api.delete_health_county?id=HC-00006
 
 Description:
 Deletes the specified health county.
