@@ -14,23 +14,23 @@ Returns a list of all health counties.
 Response:
 
 {
-    "message": [
+    "status_code": 200,
+    "data": [
+        {
+            "name": "HC-00005",
+            "county_name": "Example County",
+            "county_description": "This is an example description."
+        },
         {
             "name": "HC-00002",
-            "creation": "2025-02-09 23:25:18.840048",
-            "modified": "2025-02-10 01:15:55.237489",
-            "modified_by": "Administrator",
-            "owner": "Administrator",
-            "docstatus": 0,
-            "idx": 0,
-            "_user_tags": null,
-            "_comments": null,
-            "_assign": null,
-            "_liked_by": null,
-            "county_name": "Second County",
+            "county_name": "Updated County",
             "county_description": "Second Description"
+        },
+        {
+            "name": "HC-00001",
+            "county_name": "First County",
+            "county_description": "First Description"
         }
-        
     ]
 }
 
@@ -49,17 +49,11 @@ Request Body:
 
 Response:
 {
-    "message": {
-        "name": "HC-00006",
-        "owner": "Administrator",
-        "creation": "2025-02-10 11:26:52.204645",
-        "modified": "2025-02-10 11:26:52.204645",
-        "modified_by": "Administrator",
-        "docstatus": 0,
-        "idx": 0,
-        "county_name": "New County",
-        "county_description": "Description of the new county.",
-        "doctype": "Health County"
+    "status_code": 201,
+    "data": {
+        "name": "HC-00014",
+        "county_name": "Example County",
+        "county_description": "This is an example description."
     }
 }
 
@@ -81,17 +75,11 @@ Request Body:
 
 Response:
 {
-    "message": {
-        "name": "HC-00006",
-        "owner": "Administrator",
-        "creation": "2025-02-10 11:26:52.204645",
-        "modified": "2025-02-10 11:28:51.177934",
-        "modified_by": "Administrator",
-        "docstatus": 0,
-        "idx": 0,
-        "county_name": "Updated County Name",
-        "county_description": "Udpated Description.",
-        "doctype": "Health County"
+    "status_code": 200,
+    "data": {
+        "name": "HC-00012",
+        "county_name": "Updated County",
+        "county_description": "This is an example description."
     }
 }
 
@@ -106,14 +94,9 @@ id: The unique ID of the health county to delete.
 
 Response:
 {
-  "message": "Health County 'County ID' deleted successfully"
-}
-
-Error Handling
-All endpoints return a standardized error message if an exception occurs. Example:
-{
-    "message": {
-        "message": "Health County 'HC-00006' deleted successfully"
+    "status_code": 200,
+    "data": {
+        "message": "Health County 'HC-00014' deleted successfully."
     }
 }
 #### License
