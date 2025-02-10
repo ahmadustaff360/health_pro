@@ -58,7 +58,7 @@ def update_health_county(id):
         frappe.throw(_("Failed to update health county: {0}").format(str(e)))
 
         
-@frappe.whitelist(allow_guest=True)
+@frappe.whitelist(methods=["DELETE"])
 def delete_health_county(id):
     
     """Delete a health county by id."""
