@@ -1,76 +1,76 @@
 import json
 import frappe
 from frappe import _
+from .response_utils import (
+    success_response,
+    error_response,
+    not_found_response,
+    missing_field_response,
+    creation_failed_response,
+    update_failed_response,
+    deletion_failed_response,
+    unexpected_error_response,
+    created_successfully_response
+)
 
-@frappe.whitelist(methods=["GET"])
-def get_health_county():
-    
-    """Retrieve all health counties."""
-    
-    try:
-        counties = frappe.get_all("Health County", fields=["*"]) 
-        return counties
-    except Exception as e:
-        frappe.throw(_("An unexpected error occurred: {0}").format(str(e)))
+class HealthCountyAPI:
+    """API for Health County CRUD operations."""
 
-@frappe.whitelist(methods=["POST"])
-def create_health_county():
-    
-    """Create a new health county."""
-    
-    try:
-        data = json.loads(frappe.request.data)
-        county = frappe.new_doc("Health County")
-        
-        if not data.get("county_name"):
-            frappe.throw(_("County name is required"))
-        
-        for field, value in data.items():
-            if hasattr(county, field):
-                setattr(county, field, value)
-        county.insert()
-        frappe.db.commit()
-        return county.as_dict()
-    except Exception as e:
-        frappe.throw(_("Failed to create health county: {0}").format(str(e)))
+    def get(self):
+        """Retrieve all health counties."""
+        try:
+            counties = frappe.get_all("Health County", fields=["*"])
+            return success_response("Fetched all health counties successfully.", counties)
+        except Exception as e:
+            frappe.log_error(message=str(e), title="Health County Get Error")
+            return unexpected_error_response()
 
-@frappe.whitelist(methods=["PUT"])
-def update_health_county(id):
-    
-    """Update an existing health county."""
-    
-    try:
-        county = frappe.get_doc("Health County", id)
-        data = json.loads(frappe.request.data)
-        
-        for field, value in data.items():
-            if hasattr(county, field):
-                setattr(county, field, value)
-            
-        county.save()
-        frappe.db.commit()
-        
-        return county.as_dict()
+    def create(self):
+        """Create a new health county."""
+        try:
+            data = json.loads(frappe.request.data)
+            if not data.get("county_name"):
+                return missing_field_response("County name")
 
-    except frappe.DoesNotExistError:
-        frappe.throw(_("Health County '{0}' not found").format(id))
-        
-    except Exception as e:
-        frappe.throw(_("Failed to update health county: {0}").format(str(e)))
+            county = frappe.new_doc("Health County")
+            for field, value in data.items():
+                if hasattr(county, field):
+                    setattr(county, field, value)
+                    
+            county.insert()
+            frappe.db.commit()
+            return created_successfully_response("Health County", county.as_dict())
+        except Exception as e:
+            frappe.log_error(message=str(e), title="Health County Create Error")
+            return creation_failed_response("health county")
 
-        
-@frappe.whitelist(methods=["DELETE"])
-def delete_health_county(id):
-    
-    """Delete a health county by id."""
-    
-    try:
-        frappe.delete_doc("Health County", id)
-        frappe.db.commit()
-        return {"message": _("Health County '{0}' deleted successfully").format(id)}
-    
-    except frappe.DoesNotExistError:
-        frappe.throw(_("Health County '{0}' not found").format(id))
-        
-    except Exception as e:
-        frappe.throw(_("Failed to delete health county: {0}").format(str(e)))
+    def update(self, id):
+        """Update an existing health county."""
+        try:
+            county = frappe.get_doc("Health County", id)
+            data = json.loads(frappe.request.data)
+            for field, value in data.items():
+                if hasattr(county, field):
+                    setattr(county, field, value)
+                    
+            county.save()
+            frappe.db.commit()
+            return success_response("Health county updated successfully.", county.as_dict())
+        except frappe.DoesNotExistError:
+            return not_found_response("Health County", id)
+        except Exception as e:
+            frappe.log_error(message=str(e), title="Health County Update Error")
+            return update_failed_response("health county")
+
+    def delete(self, id):
+        """Delete a health county by id."""
+        try:
+            county = frappe.get_doc("Health County", id)
+            county.delete()
+            frappe.db.commit()
+            return success_response(f"Health County '{id}' deleted successfully.")
+        except frappe.DoesNotExistError:
+            return not_found_response("Health County", id)
+        except Exception as e:
+            frappe.log_error(message=str(e), title="Health County Delete Error")
+            return deletion_failed_response("health county")
