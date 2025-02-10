@@ -29,6 +29,7 @@ def create_health_county():
             if hasattr(county, field):
                 setattr(county, field, value)
         county.insert()
+        frappe.db.commit()
         return county.as_dict()
     except Exception as e:
         frappe.throw(_("Failed to create health county: {0}").format(str(e)))
